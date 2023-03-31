@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const port = process.env.PORT || 7000
 const app = express()
 
-mongoose.connect(`mongodb+srv://testuser:testuser3380@cluster0.4uatx8k.mongodb.net/Exam?retryWrites=true&w=majority`)
+mongoose.connect(`mongodb+srv://tempuser:123@cluster0.f9d6o.gcp.mongodb.net/Exam`)
   .then(()=> console.log(`Successfully connected to database`))
 
 const quizSchema = mongoose.Schema({
@@ -17,7 +17,13 @@ const quizSchema = mongoose.Schema({
   }
 })
 
-const QuizModel = mongoose.model(`Quiz`, quizSchema)
+const QuizModel = mongoose.model(`Quizes`, quizSchema)
+
+app.get('/test', async(req, res)=>{
+  const docs = await QuizModel.find();
+  console.log(docs)
+  res.send(`read successfully: ${docs}`)
+})
 
 app.get('/', async (req, res)=>{
   const docs = await QuizModel.create({
