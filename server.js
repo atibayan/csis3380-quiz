@@ -26,12 +26,16 @@ app.get('/test', async(req, res)=>{
 })
 
 app.get('/', async (req, res)=>{
-  const docs = await QuizModel.create({
+  await QuizModel.create({
     name: 'Mia Tibayan',
     sid: '300367726'
+  }).then((docs)=>{
+    console.log(docs)
+    res.send(`<h2>Document added! Document ID: ${docs._id}</h2>`)
+  }).catch((err)=>{
+    console.log(`Cannot create document`)
+    res.send(`Cannot create document. Error: ${err}`) 
   })
-  console.log(docs)
-  res.send(`<h2>Document added! Document ID: ${docs._id}</h2>`)
 })
 
 app.listen(port, (err)=>{
